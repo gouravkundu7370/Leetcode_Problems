@@ -1,74 +1,118 @@
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.PriorityQueue;
 
 public class DijAlgo {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        int V = 3, E = 3, S = 2;
+        ArrayList<Integer> node1 = new ArrayList<Integer>() {{
+            add(1);
+            add(1);
+        }};
+        ArrayList<Integer> node2 = new ArrayList<Integer>() {{
+            add(2);
+            add(6);
+        }};
+        ArrayList<Integer> node3 = new ArrayList<Integer>() {{
+            add(2);
+            add(3);
+        }};
+        ArrayList<Integer> node4 = new ArrayList<Integer>() {{
+            add(0);
+            add(1);
+        }};
+        ArrayList<Integer> node5 = new ArrayList<Integer>() {{
+            add(1);
+            add(3);
+        }};
+        ArrayList<Integer> node6 = new ArrayList<Integer>() {{
+            add(0);
+            add(6);
+        }};
 
+        ArrayList<ArrayList<Integer>> inter1 = new ArrayList<ArrayList<Integer>>() {
+            {
+                add(node1);
+                add(node2);
+            }
+        };
+        ArrayList<ArrayList<Integer>> inter2 = new ArrayList<ArrayList<Integer>>() {
+            {
+                add(node3);
+                add(node4);
+            }
+        };
+        ArrayList<ArrayList<Integer>> inter3 = new ArrayList<ArrayList<Integer>>() {
+            {
+                add(node5);
+                add(node6);
+            }
+        };
+        ArrayList<ArrayList<ArrayList<Integer>>> adj = new ArrayList<ArrayList<ArrayList<Integer>>>() {
+            {
+                add(inter1); // for 1st node
+                add(inter2); // for 2nd node
+                add(inter3); // for 3rd node
+            }
+        };
+        int[] res = dijkstra(V,adj,S);
+        System.out.println(Arrays.toString(res));
     }
     //Function to find the vertex with minimum distance value, from the set
     //of vertices not yet included in the shortest path tree.
-    public static int minDistance(int[] dist, boolean[] sptSet, int V)
-    {
-        //initializing minimum value.
-        int min = Integer.MAX_VALUE, min_index = 0;
 
-        for (int v = 0; v < V; v++)
-            if (!sptSet[v] && dist[v] <= min){
-                min = dist[v]; min_index = v;
-            }
-
-        return min_index;
-    }
 
     //Function to find the shortest distance of all the vertices
     //from the source vertex S.
-    public static int[] dijkstra(int V, ArrayList<ArrayList<ArrayList<Integer>>> adj, int S)
-    {
-
-        //creating Adjacency matrix from Adjacency list.
-        int [][]adj_mat = new int[V][V];
-
-        for(int i=0; i<V; i++)
-            for(int j=0; j<adj.get(i).size(); j++)
-                adj_mat[i][adj.get(i).get(j).get(0)] = adj.get(i).get(j).get(1);
-
-        //dist[] is output list. dist[i] will hold the
-        //shortest distance from source to 'i'.
-        int[] dist = new int[V];
-
-        //sptSet[i] will true if vertex i is included in the shortest
-        //path tree or shortest distance from src to i is finalized.
-        boolean[] sptSet = new boolean[V];
-
-        //initializing all distances as INFINITE and stpSet[] as false.
-        for (int i = 0; i < V; i++)
-        {
-            dist[i] = Integer.MAX_VALUE;
-            sptSet[i] = false;
+   static class Pair{
+        int node;
+        int distance;
+        public Pair(int distance,int node){
+            this.node = node;
+            this.distance = distance;
         }
+    }
+    static int[] dijkstra(int V, ArrayList<ArrayList<ArrayList<Integer>>> adj, int S)
+    {
+        // Create a priority queue for storing the nodes as a pair {dist, node
+        // where dist is the distance from source to the node.
+        PriorityQueue<Pair> pq = new PriorityQueue<Pair>((x,y) -> x.distance - y.distance);
 
-        //distance of source vertex from itself is always 0.
+        int []dist = new int[V];
+
+        // Initialising distTo list with a large number to
+        // indicate the nodes are unvisited initially.
+        // This list contains distance from source to the nodes.
+        Arrays.fill(dist, (int) (1e9));
+
+        // Source initialised with dist=0.
         dist[S] = 0;
+        pq.add(new Pair(0,S));
 
-        //iterating over all vertices.
-        for (int count = 0; count < V-1; count++)
-        {
-            //picking the minimum distance vertex from the set of vertices
-            //not yet processed and marking the picked vertex as processed.
-            int u = minDistance(dist, sptSet,V);
-            sptSet[u] = true;
+        // Now, pop the minimum distance node first from the min-heap
+        // and traverse for all its adjacent nodes.
+        while(!pq.isEmpty()) {
+            int dis = pq.peek().distance;
+            int node = pq.peek().node;
+            pq.remove();
 
-            //updating dist[] value of adjacent vertices of the picked vertex.
-            for (int v = 0; v < V; v++)
-            {
-                //updating dist[v] only if it's not in sptSet, there is an
-                //edge from u to v, and total weight of path from source to
-                //v through u is smaller than current value of dist[v].
-                if (!sptSet[v] && adj_mat[u][v] !=0 && dist[u] != Integer.MAX_VALUE
-                        && dist[u]+adj_mat[u][v] < dist[v])
-                    dist[v] = dist[u] + adj_mat[u][v];
+            // Check for all adjacent nodes of the popped out
+            // element whether the prev dist is larger than current or not.
+            for(int i = 0;i<adj.get(node).size();i++) {
+                int edgeWeight = adj.get(node).get(i).get(1);
+                int adjNode = adj.get(node).get(i).get(0);
+
+                // If current distance is smaller,
+                // push it into the queue.
+                if(dis + edgeWeight < dist[adjNode]) {
+                    dist[adjNode] = dis + edgeWeight;
+                    pq.add(new Pair(dist[adjNode], adjNode));
+                }
             }
         }
-        //returning the list.
+        // Return the list containing shortest distances
+        // from source to all the nodes.
         return dist;
     }
 }
