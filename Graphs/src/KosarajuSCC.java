@@ -3,63 +3,71 @@ import java.util.Stack;
 
 public class KosarajuSCC {
     public static void main(String[] args) {
-
+        int n = 5;
+        int[][] edges = {
+                {1, 0}, {0, 2},
+                {2, 1}, {0, 3},
+                {3, 4}
+        };
+        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            adj.add(new ArrayList<Integer>());
+        }
+        for (int i = 0; i < n; i++) {
+            adj.get(edges[i][0]).add(edges[i][1]);
+        }
+        int ans = kosaraju(n, adj);
+        System.out.println("The number of strongly connected components is: " + ans);
     }
-    public int kosaraju(int V, ArrayList<ArrayList<Integer>> adj)
-    {
-        //code here
-        Stack<Integer> st = new Stack<>();
-        boolean [] visit = new boolean[V];
-
-        //Step 1: Get the node in the Stack (topological sort)
-        for(int i=0; i<V; i++){
-            if(!visit[i]){
-                topoSort(adj, visit, i, st);
+    private static void dfs(int node, int []vis, ArrayList<ArrayList<Integer>> adj,
+                     Stack<Integer> st) {
+        vis[node] = 1;
+        for (Integer it : adj.get(node)) {
+            if (vis[it] == 0) {
+                dfs(it, vis, adj, st);
             }
         }
-        //Step 2: transpose the graph
-        ArrayList<ArrayList<Integer>> transpose = new ArrayList<ArrayList<Integer>>();
-        for(int i=0; i<V; i++){
-            visit[i] = false;
-            transpose.add(new ArrayList<Integer>());
+        st.push(node);
+    }
+    private static void dfs3(int node, int[] vis, ArrayList<ArrayList<Integer>> adjT) {
+        vis[node] = 1;
+        for (Integer it : adjT.get(node)) {
+            if (vis[it] == 0) {
+                dfs3(it, vis, adjT);
+            }
         }
-
-        for(int i=0; i<V; i++){
-            for(int j=0; j<adj.get(i).size();j++){
-                int dest = adj.get(i).get(j);
-                transpose.get(dest).add(i);
+    }
+    //Function to find number of strongly connected components in the graph.
+    public static int kosaraju(int V, ArrayList<ArrayList<Integer>> adj) {
+        int[] vis = new int[V];
+        Stack<Integer> st = new Stack<Integer>();
+        for (int i = 0; i < V; i++) {
+            if (vis[i] == 0) {
+                dfs(i, vis, adj, st);
             }
         }
 
+        ArrayList<ArrayList<Integer>> adjT = new ArrayList<ArrayList<Integer>>();
+        for (int i = 0; i < V; i++) {
+            adjT.add(new ArrayList<Integer>());
+        }
+        for (int i = 0; i < V; i++) {
+            vis[i] = 0;
+            for (Integer it : adj.get(i)) {
+                // i -> it
+                // it -> i
+                adjT.get(it).add(i);
+            }
+        }
         int scc = 0;
-        //Step 3: do the DFS on Stack element
-        while(!st.isEmpty()){
-            int curr = st.pop();
-            if(!visit[curr]){
-                dfs(transpose, visit, curr);
+        while (!st.isEmpty()) {
+            int node = st.peek();
+            st.pop();
+            if (vis[node] == 0) {
                 scc++;
+                dfs3(node, vis, adjT);
             }
         }
         return scc;
-    }
-
-    public void topoSort(ArrayList<ArrayList<Integer>> adj, boolean[] visit, int curr, Stack<Integer> st){
-        visit[curr] = true;
-        for(int i=0; i<adj.get(curr).size();i++){
-            if(!visit[adj.get(curr).get(i)]){
-                topoSort(adj, visit, adj.get(curr).get(i), st);
-            }
-        }
-
-        st.push(curr);
-    }
-
-    public void dfs(ArrayList<ArrayList<Integer>> transpose, boolean[] visit, int curr){
-        visit[curr] = true;
-        for(int i=0; i<transpose.get(curr).size(); i++){
-            if(!visit[transpose.get(curr).get(i)]){
-                dfs(transpose, visit, transpose.get(curr).get(i));
-            }
-        }
     }
 }

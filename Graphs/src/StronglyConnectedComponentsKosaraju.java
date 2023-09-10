@@ -1,98 +1,88 @@
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Stack;
 
 public class StronglyConnectedComponentsKosaraju {
-    static class Graph {
-        private int V;
-        private LinkedList<Integer> adj[];
+    static int scc;
 
-        Graph(int v) {
-            V = v;
-            adj = new LinkedList[v];
-            for (int i = 0; i < v; ++i)
-                adj[i] = new LinkedList();
+    public static void kosaraju(int V, ArrayList<ArrayList<Integer>> adj)
+    {
+        //code here
+        Stack<Integer> st = new Stack<>();
+        boolean [] visit = new boolean[V];
+
+        //Step 1: Get the node in the Stack (topological sort)
+        for(int i=0; i<V; i++){
+            if(!visit[i]){
+                topoSort(adj, visit, i, st);
+            }
+        }
+        //Step 2: transpose the graph
+        ArrayList<ArrayList<Integer>> transpose = new ArrayList<ArrayList<Integer>>();
+        for(int i=0; i<V; i++){
+            visit[i] = false;
+            transpose.add(new ArrayList<Integer>());
         }
 
-        void addEdge(int v, int w) {
-            adj[v].add(w);
-        }
-
-        void DFSUtil(int v, boolean[] visited) {
-
-            visited[v] = true;
-            System.out.print(v + " ");
-
-            int n;
-
-            Iterator<Integer> i = adj[v].iterator();
-            while (i.hasNext()) {
-                n = i.next();
-                if (!visited[n])
-                    DFSUtil(n, visited);
+        for(int i=0; i<V; i++){
+            for(int j=0; j<adj.get(i).size();j++){
+                int dest = adj.get(i).get(j);
+                transpose.get(dest).add(i);
             }
         }
 
-        Graph getTranspose() {
-            Graph g = new Graph(V);
-            for (int v = 0; v < V; v++) {
-                Iterator<Integer> i = adj[v].listIterator();
-                while (i.hasNext())
-                    g.adj[i.next()].add(v);
-            }
-            return g;
-        }
-
-        void fillOrder(int v, boolean[] visited, Stack stack) {
-            visited[v] = true;
-
-            Iterator<Integer> i = adj[v].iterator();
-            while (i.hasNext()) {
-                int n = i.next();
-                if (!visited[n])
-                    fillOrder(n, visited, stack);
-            }
-
-            stack.push(v);
-        }
-
-        void printSCCs() {
-            Stack stack = new Stack();
-
-            boolean[] visited = new boolean[V];
-            for (int i = 0; i < V; i++)
-                visited[i] = false;
-
-            for (int i = 0; i < V; i++)
-                if (!visited[i])
-                    fillOrder(i, visited, stack);
-
-            Graph gr = getTranspose();
-
-            for (int i = 0; i < V; i++)
-                visited[i] = false;
-
-            while (!stack.empty()) {
-                int v = (int) stack.pop();
-
-                if (!visited[v]) {
-                    gr.DFSUtil(v, visited);
-                    System.out.println();
-                }
+         scc = 0;
+        //Step 3: do the DFS on Stack element
+        while(!st.isEmpty()){
+            int curr = st.pop();
+            if(!visit[curr]){
+                dfs(transpose, visit, curr);
+                System.out.println();
+                scc++;
             }
         }
 
-        public static void main(String[] args) {
-            Graph g = new Graph(5);
-            g.addEdge(1, 0);
-            g.addEdge(0, 2);
-            g.addEdge(2, 1);
-            g.addEdge(0, 3);
-            g.addEdge(3, 4);
+    }
 
-            System.out.println("Following are strongly connected components " +
-                    "in given graph ");
-            g.printSCCs();
+    public static void topoSort(ArrayList<ArrayList<Integer>> adj, boolean[] visit, int curr, Stack<Integer> st){
+        visit[curr] = true;
+        for(int i=0; i<adj.get(curr).size();i++){
+            if(!visit[adj.get(curr).get(i)]){
+                topoSort(adj, visit, adj.get(curr).get(i), st);
+            }
         }
+
+        st.push(curr);
+    }
+
+    public static void dfs(ArrayList<ArrayList<Integer>> transpose, boolean[] visit, int curr){
+        visit[curr] = true;
+        System.out.print(curr + " ");
+        for(int i=0; i<transpose.get(curr).size(); i++){
+            if(!visit[transpose.get(curr).get(i)]){
+                dfs(transpose, visit, transpose.get(curr).get(i));
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        int n = 5;
+        int[][] edges = {
+                {1, 0}, {0, 2},
+                {2, 1}, {0, 3},
+                {3, 4}
+        };
+        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            adj.add(new ArrayList<Integer>());
+        }
+        for (int i = 0; i < n; i++) {
+            adj.get(edges[i][0]).add(edges[i][1]);
+        }
+        kosaraju(n,adj);
+        System.out.println();
+        System.out.println(scc);
+
     }
 }

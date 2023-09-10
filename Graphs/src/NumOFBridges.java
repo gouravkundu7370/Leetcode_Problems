@@ -4,6 +4,7 @@ public class NumOFBridges {
     static void addEdge(ArrayList<ArrayList<Integer> > adj, int u, int v)
     {
         adj.get(u).add(v);
+        adj.get(v).add(u);
 
 
     }
@@ -18,7 +19,7 @@ public class NumOFBridges {
         }
     }
     public static void main(String[] args) {
-        int V = 4;
+        int V = 5;
         ArrayList<ArrayList<Integer> > adj = new ArrayList<ArrayList<Integer> >(V);
 
         for (int i = 0; i < V; i++)
@@ -28,10 +29,11 @@ public class NumOFBridges {
         addEdge(adj, 0, 1);
         addEdge(adj, 0, 2);
         addEdge(adj, 1, 2);
-        addEdge(adj, 1, 3);
-
+        addEdge(adj, 0, 3);
+        addEdge(adj, 4, 3);
         printGraph(adj);
-        System.out.println(isBridge(V,adj,1,3));
+        System.out.println();
+        System.out.println(isBridge(V,adj,3,0));
 
     }
 

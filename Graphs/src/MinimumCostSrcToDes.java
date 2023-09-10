@@ -12,7 +12,7 @@ public class MinimumCostSrcToDes {
         }
         queue.add(new int[]{grid[0][0], 0, 0});
 
-        int[][] ds = new int[][]{{0,1},{0, -1},{1,0},{-1,0}};
+        int[][] ds = {{0,1},{0, -1},{1,0},{-1,0}};
 
         while(!queue.isEmpty()){
             int[] temp = queue.poll();
@@ -43,10 +43,7 @@ public class MinimumCostSrcToDes {
     }
 
     public static boolean isSafe(int row, int col, int N, int M){
-        if(row < 0 || col < 0 || row >= N || col >= M){
-            return false;
-        }
-        return true;
+        return row >= 0 && col >= 0 && row < N && col < M;
     }
 
     public static void main(String[] args) {
