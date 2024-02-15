@@ -4,7 +4,32 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="44d93ce6-ba53-45af-add1-b43145243b7a" name="Changes" comment="" />
+    <list default="true" id="44d93ce6-ba53-45af-add1-b43145243b7a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BackTracking.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/BackTracking/BlackANDWhiteKnights.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/BackTracking/CombinationSumBT.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/BackTracking/LargestNumberKSwaps.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/BackTracking/MColoringProblem.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/BackTracking/N_Queen.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/BackTracking/PermuteBT.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/BackTracking/RatInMaze.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/BackTracking/RatMazeMultipleJumps.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/BackTracking/SodukuSolveBT.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/BackTracking/UniqueSubsets.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/BlackANDWhiteKnights.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/CombinationSumBT.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/LargestNumberKSwaps.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/MColoringProblem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/N_Queen.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/PermuteBT.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/RatInMaze.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/RatMazeMultipleJumps.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/SodukuSolveBT.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/UniqueSubsets.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
