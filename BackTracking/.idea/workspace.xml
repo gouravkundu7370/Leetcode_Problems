@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="44d93ce6-ba53-45af-add1-b43145243b7a" name="Changes" comment="" />
+    <list default="true" id="44d93ce6-ba53-45af-add1-b43145243b7a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -40,7 +42,7 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;advanced.settings&quot;
   }
 }</component>
-  <component name="RunManager" selected="Application.CRC">
+  <component name="RunManager" selected="Application.N_Queen">
     <configuration name="BlackANDWhiteKnights" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="BlackANDWhiteKnights" />
       <module name="BackTracking" />
@@ -62,8 +64,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="RatMazeMultipleJumps" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="RatMazeMultipleJumps" />
+    <configuration name="N_Queen" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="N_Queen" />
       <module name="BackTracking" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -76,13 +78,24 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.N_Queen" />
         <item itemvalue="Application.CRC" />
         <item itemvalue="Application.BlackANDWhiteKnights" />
         <item itemvalue="Application.UniqueSubsets" />
         <item itemvalue="Application.LargestNumberKSwaps" />
-        <item itemvalue="Application.RatMazeMultipleJumps" />
       </list>
     </recent_temporary>
   </component>
